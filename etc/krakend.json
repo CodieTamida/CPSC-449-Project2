@@ -46,6 +46,7 @@
         {
             "endpoint" : "/api/classes",
             "method" : "GET",
+            "input_headers": ["x_roles"],
             "input_query_strings": [
                 "department_name"
             ],
@@ -73,6 +74,9 @@
                     "roles_key_is_nested": false,
                     "roles" : ["Student"],                    
                     "disable_jwk_security": true,
+                    "propagate_claims": [
+                        ["roles", "x_roles"]
+                    ],
                     "operation_debug": true
                 }
             }
@@ -80,7 +84,7 @@
         {
             "endpoint" : "/api/enrollment",
             "method" : "POST",
-            "input_headers": ["x_user", "x_roles"],
+            "input_headers": ["x_user_id", "x_roles"],
             "backend" : [
                 {
                     "url_pattern": "/enrollment",
@@ -105,6 +109,10 @@
                     "roles_key_is_nested": false,
                     "roles" : ["Student"],                    
                     "disable_jwk_security": true,
+                    "propagate_claims": [
+                        ["jti", "x_user_id"],
+                        ["roles", "x_roles"]
+                    ],
                     "operation_debug": true
                 }
             }
@@ -112,6 +120,7 @@
         {
             "endpoint" : "/api/dropcourse",
             "method" : "PUT",
+            "input_headers": ["x_user_id", "x_roles"],
             "backend" : [
                 {
                     "url_pattern": "/dropcourse",
@@ -138,7 +147,7 @@
                     "disable_jwk_security": true,
                     "operation_debug": true,
                     "propagate_claims": [
-                        ["sub", "x_user"],
+                        ["jti", "x_user_id"],
                         ["roles", "x_roles"]
                     ]
                 }
@@ -147,9 +156,7 @@
         {
             "endpoint" : "/api/waitlist_position",
             "method" : "GET",
-            "input_query_strings": [
-                "student_id"
-            ],
+            "input_headers": ["x_user_id", "x_roles"],
             "backend" : [
                 {
                     "url_pattern": "/waitlist_position",
@@ -174,6 +181,10 @@
                     "roles_key_is_nested": false,
                     "roles" : ["Student"],                    
                     "disable_jwk_security": true,
+                    "propagate_claims": [
+                        ["jti", "x_user_id"],
+                        ["roles", "x_roles"]
+                    ],
                     "operation_debug": true
                 }
             }
@@ -181,6 +192,7 @@
         {
             "endpoint" : "/api/view_waitlist",
             "method" : "GET",
+            "input_headers": ["x_roles"],
             "backend" : [
                 {
                     "url_pattern": "/view_waitlist",
@@ -205,6 +217,9 @@
                     "roles_key_is_nested": false,
                     "roles" : ["Instructor"],                    
                     "disable_jwk_security": true,
+                    "propagate_claims": [
+                        ["roles", "x_roles"]
+                    ],
                     "operation_debug": true
                 }
             }
@@ -213,10 +228,10 @@
             "endpoint" : "/api/classEnrollment",
             "method" : "GET",
             "input_query_strings": [
-                "instructor_id",
                 "section_number",
                 "course_code"
             ],
+            "input_headers": ["x_user_id", "x_roles"],
             "backend" : [
                 {
                     "url_pattern": "/classEnrollment",
@@ -241,6 +256,10 @@
                     "roles_key_is_nested": false,
                     "roles" : ["Instructor"],                    
                     "disable_jwk_security": true,
+                    "propagate_claims": [
+                        ["jti", "x_user_id"],
+                        ["roles", "x_roles"]
+                    ],
                     "operation_debug": true
                 }
             }
@@ -249,10 +268,10 @@
             "endpoint" : "/api/classWaitlist",
             "method" : "GET",
             "input_query_strings": [
-                "instructor_id",
                 "section_number",
                 "course_code"
             ],
+            "input_headers": ["x_user_id", "x_roles"],
             "backend" : [
                 {
                     "url_pattern": "/classWaitlist",
@@ -277,6 +296,10 @@
                     "roles_key_is_nested": false,
                     "roles" : ["Instructor"],                    
                     "disable_jwk_security": true,
+                    "propagate_claims": [
+                        ["jti", "x_user_id"],
+                        ["roles", "x_roles"]
+                    ],
                     "operation_debug": true
                 }
             }
@@ -285,10 +308,10 @@
             "endpoint" : "/api/classDropped",
             "method" : "GET",
             "input_query_strings": [
-                "instructor_id",
                 "section_number",
                 "course_code"
             ],
+            "input_headers": ["x_user_id", "x_roles"],
             "backend" : [
                 {
                     "url_pattern": "/classDropped",
@@ -313,6 +336,10 @@
                     "roles_key_is_nested": false,
                     "roles" : ["Instructor"],                    
                     "disable_jwk_security": true,
+                    "propagate_claims": [
+                        ["jti", "x_user_id"],
+                        ["roles", "x_roles"]
+                    ],
                     "operation_debug": true
                 }
             }
@@ -320,6 +347,7 @@
         {
             "endpoint" : "/api/dropStudent",
             "method" : "POST",
+            "input_headers": ["x_roles"],
             "backend" : [
                 {
                     "url_pattern": "/dropStudent",
@@ -344,6 +372,9 @@
                     "roles_key_is_nested": false,
                     "roles" : ["Instructor"],                    
                     "disable_jwk_security": true,
+                    "propagate_claims": [
+                        ["roles", "x_roles"]
+                    ],
                     "operation_debug": true
                 }
             }
@@ -351,6 +382,7 @@
         {
             "endpoint" : "/api/classes",
             "method" : "POST",
+            "input_headers": ["x_roles"],
             "backend" : [
                 {
                     "url_pattern": "/classes",
@@ -375,6 +407,9 @@
                     "roles_key_is_nested": false,
                     "roles" : ["Registrar"],                    
                     "disable_jwk_security": true,
+                    "propagate_claims": [
+                        ["roles", "x_roles"]
+                    ],
                     "operation_debug": true
                 }
             }
@@ -382,6 +417,7 @@
         {
             "endpoint" : "/api/sections",
             "method" : "DELETE",
+            "input_headers": ["x_roles"],
             "backend" : [
                 {
                     "url_pattern": "/sections",
@@ -406,6 +442,9 @@
                     "roles_key_is_nested": false,
                     "roles" : ["Registrar"],                    
                     "disable_jwk_security": true,
+                    "propagate_claims": [
+                        ["roles", "x_roles"]
+                    ],
                     "operation_debug": true
                 }
             }
@@ -413,6 +452,7 @@
         {
             "endpoint" : "/api/changeSectionInstructor",
             "method" : "POST",
+            "input_headers": ["x_roles"],
             "backend" : [
                 {
                     "url_pattern": "/changeSectionInstructor",
@@ -437,6 +477,9 @@
                     "roles_key_is_nested": false,
                     "roles" : ["Registrar"],                    
                     "disable_jwk_security": true,
+                    "propagate_claims": [
+                        ["roles", "x_roles"]
+                    ],
                     "operation_debug": true
                 }
             }
@@ -444,6 +487,7 @@
         {
             "endpoint" : "/api/freezeEnrollment",
             "method" : "POST",
+            "input_headers": ["x_roles"],
             "backend" : [
                 {
                     "url_pattern": "/freezeEnrollment",
@@ -468,6 +512,9 @@
                     "roles_key_is_nested": false,
                     "roles" : ["Registrar"],                    
                     "disable_jwk_security": true,
+                    "propagate_claims": [
+                        ["roles", "x_roles"]
+                    ],
                     "operation_debug": true
                 }
             }

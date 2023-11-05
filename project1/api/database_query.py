@@ -1,9 +1,10 @@
 from sqlite3 import Connection
 from typing import List, Union
 
-from fastapi import HTTPException, status
+from fastapi import HTTPException, status, Depends
 from loguru import logger
 from typing import Optional
+
 
 from .models import (
     AvailableClass,
@@ -66,7 +67,7 @@ def get_available_classes(db_connection: Connection, department_name: str) -> Li
         result.append(available_class)
     cursor.close()
     return result
-    
+
 
 def check_user_role(db_connection: Connection, student_id: int)-> Union[str, None]:
     logger.info('Checking user role')

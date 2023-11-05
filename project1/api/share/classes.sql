@@ -125,7 +125,7 @@ INSERT INTO Class (CourseCode, Name, Department) VALUES
 
 -- Section Table
 INSERT INTO Section (sectionNumber, CourseCode, InstructorID, CurrentEnrollment, MaxEnrollment, Waitlist, SectionStatus) VALUES
-    (1, 'CPSC-101', 2, 5, 30, 1, 'open'),
+    (1, 'CPSC-101', 2, 5, 30, 1, 'closed'),
     (2, 'CPSC-101', 2, 4, 30, 1, 'open'),
     (1, 'CPSC-111', 2, 2, 35, 1, 'open'),
     (2, 'CPSC-111', 7, 3, 25, 0, 'open'),

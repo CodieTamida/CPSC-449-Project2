@@ -8,20 +8,29 @@ from random import choice
 from models import *
 import itertools
 from helpers.response import *
+import logging.config
+from fastapi import Depends
+
+logging.config.fileConfig("etc/logging.ini", disable_existing_loggers=False)
 
 read_dbs = ["var/secondary_2/fuse/auth.db","var/secondary_1/fuse/auth.db"]
 index = itertools.cycle(range(0, len(read_dbs)))
 
-def get_db():
+def get_logger():
+    return logging.getLogger("__name__")
+
+def get_db(logger: logging.Logger = Depends(get_logger)):
     with contextlib.closing(sqlite3.connect("var/primary/fuse/auth.db")) as db:
         db.row_factory = sqlite3.Row
+        db.set_trace_callback(logger.debug)
         yield db
 
-def get_db_reads():
+def get_db_reads(logger: logging.Logger = Depends(get_logger)):
     target_db = read_dbs[next(index)]
     print(target_db)
     with contextlib.closing(sqlite3.connect(target_db)) as db:
         db.row_factory = sqlite3.Row
+        db.set_trace_callback(logger.debug)
         yield db
 
 

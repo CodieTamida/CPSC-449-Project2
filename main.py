@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException, status, Depends
+from fastapi import FastAPI, HTTPException, status
 
 from models import NewAccountRequest
 from http import HTTPStatus
@@ -12,6 +12,9 @@ app = FastAPI()
 
 @app.get("/")
 async def root():
+    # test logger
+    logger = logging.getLogger("__name__")
+    logger.info("Root Endpoint accessed using logging.ini")
     return {"message": "User Authentication services"}
 
 @app.post("/register")
@@ -28,7 +31,7 @@ def register(request: NewAccountRequest, db:sqlite3.Connection = Depends(get_db)
         return create_response(HTTPStatus.CREATED, f'{user["username"]} created!', user)
 
 @app.post("/login")
-def login(request:LoginRequest, db: sqlite3.Connection = Depends(get_db_reads)):
+def login(request:LoginRequest, db: sqlite3.Connection = Depends(get_db)):
     user = get_user_by_username(request.username, db, hide_password =False)
 
     if not user:
